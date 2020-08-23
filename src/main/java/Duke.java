@@ -13,7 +13,7 @@ public class Duke {
         TextManager textManager = new TextManager();
         String line = null;
         Scanner in = new Scanner(System.in);
-        String[] tasks = new String[100];
+        Task[] tasks = new Task[100];
         int taskCount = 0;
 
         // Greet upon starting
@@ -29,11 +29,18 @@ public class Duke {
                 // List the tasks with numbers
                 line = "";
                 for (int i = 0; i < taskCount; i++) {
-                    line += (i + 1) + ". " + tasks[i] + "\n";
+                    line += (i + 1) + "." + tasks[i].getStatusIcon()
+                            + " " + tasks[i].getDescription() + "\n";
                 }
+            } else if (line.contains("done")) {
+                // Mark the task as done
+                int taskDoneIndex = Integer.parseInt(line.split(" ")[1]) - 1;
+                tasks[taskDoneIndex].markAsDone();
+                line = "Nice! I've marked this task as done:\n  " + tasks[taskDoneIndex].getStatusIcon()
+                        + " " + tasks[taskDoneIndex].getDescription() + "\n";
             } else {
                 // Add the task to the list
-                tasks[taskCount++] = line;
+                tasks[taskCount++] = new Task(line);
                 line = "added: " + line + "\n";
             }
         } while (!line.equals("added: bye\n"));
