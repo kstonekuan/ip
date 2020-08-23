@@ -20,11 +20,13 @@ public class Duke {
         textManager.printGreetMessage();
 
         // Loop until the user inputs "bye"
-        do {
+        while(true) {
             inputMessage = in.nextLine(); // get the user input
             outputMessage = ""; // reset the output message
 
-            if (inputMessage.equals("list")) {
+            if (inputMessage.equals("bye")) {
+                break;
+            } else if (inputMessage.equals("list")) {
                 // List the tasks with numbers
                 for (int i = 0; i < Task.getTaskCount(); i++) {
                     outputMessage += (i + 1) + "." + tasks[i].getStatusIcon()
@@ -44,7 +46,7 @@ public class Duke {
             }
 
             textManager.printMessage(outputMessage);
-        } while (!outputMessage.equals("added: bye\n"));
+        }
 
         // Exit the program
         textManager.printExitMessage();
