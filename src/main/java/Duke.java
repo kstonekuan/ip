@@ -1,5 +1,8 @@
+import java.util.Scanner;
+
 public class Duke {
     public static void main(String[] args) {
+        // Duke's Logo
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -7,13 +10,15 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
 
-        // Skeletal code to greet users and exit
-        System.out.print("____________________________________________________________\n"
-                + "Hello! I'm Duke\n"
-                + "What can I do for you?\n"
-                + "____________________________________________________________\n"
-                + "Bye. Hope to see you again soon!\n"
-                + "____________________________________________________________\n"
-                );
+        TextManager textManager = new TextManager();
+        String line = textManager.getGreetMessage();
+        Scanner in = new Scanner(System.in);
+
+        do {
+            textManager.printMessage(line);
+            line = in.nextLine() + "\n";
+        } while (!line.equals("bye\n"));
+
+        textManager.printMessage(textManager.getExitMessage());
     }
 }
