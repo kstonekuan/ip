@@ -11,7 +11,8 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
 
         TextManager textManager = new TextManager();
-        String line = null;
+        String inputMessage;
+        String outputMessage;
         Scanner in = new Scanner(System.in);
         Task[] tasks = new Task[100];
         int taskCount = 0;
@@ -21,29 +22,30 @@ public class Duke {
 
         // Loop until the user inputs "bye"
         do {
-            // Print previous line, nothing if first iteration
-            textManager.printMessage(line);
-            line = in.nextLine();
+            inputMessage = in.nextLine(); // get the user input
+            outputMessage = ""; // reset the output message
 
-            if (line.equals("list")) {
+            if (inputMessage.equals("list")) {
                 // List the tasks with numbers
-                line = "";
                 for (int i = 0; i < taskCount; i++) {
-                    line += (i + 1) + "." + tasks[i].getStatusIcon()
+                    outputMessage += (i + 1) + "." + tasks[i].getStatusIcon()
                             + " " + tasks[i].getDescription() + "\n";
                 }
-            } else if (line.contains("done")) {
+            } else if (inputMessage.split(" ")[0].equals("done")) {
                 // Mark the task as done
-                int taskDoneIndex = Integer.parseInt(line.split(" ")[1]) - 1;
+                int taskDoneIndex = Integer.parseInt(inputMessage.split(" ")[1]) - 1;
                 tasks[taskDoneIndex].markAsDone();
-                line = "Nice! I've marked this task as done:\n  " + tasks[taskDoneIndex].getStatusIcon()
+
+                outputMessage = "Nice! I've marked this task as done:\n  " + tasks[taskDoneIndex].getStatusIcon()
                         + " " + tasks[taskDoneIndex].getDescription() + "\n";
             } else {
                 // Add the task to the list
-                tasks[taskCount++] = new Task(line);
-                line = "added: " + line + "\n";
+                tasks[taskCount++] = new Task(inputMessage);
+                outputMessage = "added: " + inputMessage + "\n";
             }
-        } while (!line.equals("added: bye\n"));
+
+            textManager.printMessage(outputMessage);
+        } while (!outputMessage.equals("added: bye\n"));
 
         // Exit the program
         textManager.printExitMessage();
