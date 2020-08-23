@@ -15,7 +15,6 @@ public class Duke {
         String outputMessage;
         Scanner in = new Scanner(System.in);
         Task[] tasks = new Task[100];
-        int taskCount = 0;
 
         // Greet upon starting
         textManager.printGreetMessage();
@@ -27,7 +26,7 @@ public class Duke {
 
             if (inputMessage.equals("list")) {
                 // List the tasks with numbers
-                for (int i = 0; i < taskCount; i++) {
+                for (int i = 0; i < Task.getTaskCount(); i++) {
                     outputMessage += (i + 1) + "." + tasks[i].getStatusIcon()
                             + " " + tasks[i].getDescription() + "\n";
                 }
@@ -40,7 +39,7 @@ public class Duke {
                         + " " + tasks[taskDoneIndex].getDescription() + "\n";
             } else {
                 // Add the task to the list
-                tasks[taskCount++] = new Task(inputMessage);
+                tasks[Task.getTaskCount()] = new Task(inputMessage);
                 outputMessage = "added: " + inputMessage + "\n";
             }
 
