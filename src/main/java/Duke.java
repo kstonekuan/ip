@@ -11,14 +11,16 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
 
         TextManager textManager = new TextManager();
-        String line = textManager.getGreetMessage();
+        String line = null;
         Scanner in = new Scanner(System.in);
+
+        textManager.printGreetMessage();
 
         do {
             textManager.printMessage(line);
             line = in.nextLine() + "\n";
         } while (!line.equals("bye\n"));
 
-        textManager.printMessage(textManager.getExitMessage());
+        textManager.printExitMessage();
     }
 }

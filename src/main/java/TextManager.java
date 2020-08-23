@@ -12,15 +12,18 @@ public class TextManager {
     public TextManager() {
     }
 
-    public String getGreetMessage() {
-        return greetMessage;
-    }
-
-    public String getExitMessage() {
-        return exitMessage;
-    }
-
     public void printMessage(String message) {
+        if (message == null) {
+            return;
+        }
         System.out.println(horizontalLine + message + horizontalLine);
+    }
+
+    public void printGreetMessage() {
+        printMessage(greetMessage);
+    }
+
+    public void printExitMessage() {
+        printMessage(exitMessage);
     }
 }
