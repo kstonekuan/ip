@@ -12,6 +12,7 @@ public class TextManager {
     public TextManager() {
     }
 
+    // Wrap message with lines and print
     public void printMessage(String message) {
         if (message == null) {
             return;
@@ -19,10 +20,12 @@ public class TextManager {
         System.out.println(horizontalLine + message + horizontalLine);
     }
 
+    // Print the greeting message
     public void printGreetMessage() {
         printMessage(greetMessage);
     }
 
+    // Print the exit message
     public void printExitMessage() {
         printMessage(exitMessage);
     }
