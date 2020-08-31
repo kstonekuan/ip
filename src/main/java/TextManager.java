@@ -1,32 +1,32 @@
 public class TextManager {
     // Horizontal line to wrap messages with
-    private String horizontalLine = "____________________________________________________________\n";
+    private static final String HORIZONTAL_LINE = "____________________________________________________________\n";
 
     // Message to greet users.
-    private String greetMessage = "Hello! I'm Duke\n"
+    private static final String GREET_MESSAGE = "Hello! I'm Duke\n"
             + "What can I do for you?\n";
 
     // Message upon exiting program.
-    private String exitMessage = "Bye. Hope to see you again soon!\n";
+    private static final String EXIT_MESSAGE = "Bye. Hope to see you again soon!\n";
 
     public TextManager() {
     }
 
-    // Wrap message with lines and print
+    // Wraps message with lines and print
     public void printMessage(String message) {
         if (message == null) {
             return;
         }
-        System.out.println(horizontalLine + message + horizontalLine);
+        System.out.println(HORIZONTAL_LINE + message + HORIZONTAL_LINE);
     }
 
-    // Print the greeting message
+    // Prints the greeting message
     public void printGreetMessage() {
-        printMessage(greetMessage);
+        printMessage(GREET_MESSAGE);
     }
 
-    // Print the exit message
+    // Prints the exit message
     public void printExitMessage() {
-        printMessage(exitMessage);
+        printMessage(EXIT_MESSAGE);
     }
 }
