@@ -2,11 +2,8 @@ public class Deadline extends Task{
     private static final String deadlineIcon = "[D]";
     private String doByMessage;
 
-    public Deadline(String description) {
+    public Deadline(String description, String doByMessage) {
         super(description);
-    }
-
-    public void setDoByMessage(String doByMessage) {
         this.doByMessage = doByMessage;
     }
 
