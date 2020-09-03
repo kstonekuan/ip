@@ -1,10 +1,16 @@
-import java.util.Scanner;
-
 public class Duke {
+    private static final int TASK_CAPACITY = 100;
+    private static final int INPUT_RAW_INDEX_COMMAND = 0;
+    private static final int INPUT_RAW_INDEX_DESC = 1;
+    private static final int INPUT_DEADLINE_INDEX_DESC = 0;
+    private static final int INPUT_DEADLINE_INDEX_BY = 1;
+    private static final int INPUT_EVENT_INDEX_DESC = 0;
+    private static final int INPUT_EVENT_INDEX_AT = 1;
+    private static final String INPUT_DELIMITER = " ";
+
     public static void main(String[] args) {
         String inputMessage;
-        Scanner in = new Scanner(System.in);
-        Task[] tasks = new Task[100];
+        Task[] tasks = new Task[TASK_CAPACITY];
         boolean isNotBye = true;
 
         // Greet upon starting
@@ -12,7 +18,7 @@ public class Duke {
 
         // Loop until the user inputs "bye"
         while(isNotBye) {
-            inputMessage = in.nextLine(); // get the user input
+            inputMessage = TextManager.getUserInput();
             isNotBye = processInputMessage(inputMessage, tasks);
         }
 
@@ -21,31 +27,33 @@ public class Duke {
     }
 
     private static boolean processInputMessage(String inputMessage, Task[] tasks) {
-        String[] inputWords = inputMessage.split(" ");
-        String command = inputWords[0];
+        String[] inputWords = inputMessage.split(INPUT_DELIMITER);
+
+        String command = inputWords[INPUT_RAW_INDEX_COMMAND];
         String description = getDescription(inputWords);
+
         Task taskDone;
         Task taskAdded;
 
         switch (command) {
-        case "bye":
+        case TextManager.COMMAND_BYE:
             return false; // Return false immediately to end the loop
-        case "list":
+        case TextManager.COMMAND_LIST:
             TextManager.printTaskList(tasks);
             break;
-        case "done":
+        case TextManager.COMMAND_DONE:
             taskDone = markTaskAsDone(tasks, description);
             TextManager.printDoneTask(taskDone);
             break;
-        case "todo":
+        case TextManager.COMMAND_TODO:
             taskAdded = addToDoToTasks(tasks, description);
             TextManager.printAddTask(taskAdded);
             break;
-        case "deadline":
+        case TextManager.COMMAND_DEADLINE:
             taskAdded = addDeadlineToTasks(tasks, description);
             TextManager.printAddTask(taskAdded);
             break;
-        case "event":
+        case TextManager.COMMAND_EVENT:
             taskAdded = addEventToTasks(tasks, description);
             TextManager.printAddTask(taskAdded);
             break;
@@ -56,18 +64,18 @@ public class Duke {
     }
 
     private static Task addEventToTasks(Task[] tasks, String description) {
-        String[] eventInputs = description.split(" /at ");
-        String eventDescription = eventInputs[0];
-        String eventAtMessage = eventInputs[1];
+        String[] eventInputs = description.split(TextManager.COMMAND_EVENT_AT_SEPARATOR);
+        String eventDescription = eventInputs[INPUT_EVENT_INDEX_DESC];
+        String eventAtMessage = eventInputs[INPUT_EVENT_INDEX_AT];
 
         tasks[Task.getTaskCount()] = new Event(eventDescription, eventAtMessage);
         return tasks[Task.getTaskCount() - 1];
     }
 
     private static Task addDeadlineToTasks(Task[] tasks, String description) {
-        String[] deadlineInputs = description.split(" /by ");
-        String deadlineDescription = deadlineInputs[0];
-        String doByMessage = deadlineInputs[1];
+        String[] deadlineInputs = description.split(TextManager.COMMAND_DEADLINE_BY_SEPARATOR);
+        String deadlineDescription = deadlineInputs[INPUT_DEADLINE_INDEX_DESC];
+        String doByMessage = deadlineInputs[INPUT_DEADLINE_INDEX_BY];
 
         tasks[Task.getTaskCount()] = new Deadline(deadlineDescription, doByMessage);
         return tasks[Task.getTaskCount() - 1];
@@ -85,13 +93,15 @@ public class Duke {
     }
 
     private static String getDescription(String[] inputWords) {
-        String description = "";
-        if (inputWords.length > 1) {
-            description = inputWords[1];
+        if (inputWords.length > INPUT_RAW_INDEX_DESC) {
+            String description = inputWords[INPUT_RAW_INDEX_DESC];
             for (int i = 2; i < inputWords.length; i++) {
-                description = String.join(" ", description, inputWords[i]);
+                description = String.join(INPUT_DELIMITER, description, inputWords[i]);
             }
+            return description;
+        } else {
+            return "";
         }
-        return description;
+
     }
 }

@@ -1,23 +1,42 @@
-public class TextManager {
-    // Duke's Logo
-    private static final String logo = " ____        _        \n"
-            + "|  _ \\ _   _| | _____ \n"
-            + "| | | | | | | |/ / _ \\\n"
-            + "| |_| | |_| |   <  __/\n"
-            + "|____/ \\__,_|_|\\_\\___|\n";
+import java.util.Scanner;
 
-    // Horizontal line to wrap messages with
+public class TextManager {
+    private static final Scanner SCANNER = new Scanner(System.in);
+    private static final String LOGO_DUKE = " ____        _        " + System.lineSeparator()
+            + "|  _ \\ _   _| | _____ " + System.lineSeparator()
+            + "| | | | | | | |/ / _ \\" + System.lineSeparator()
+            + "| |_| | |_| |   <  __/" + System.lineSeparator()
+            + "|____/ \\__,_|_|\\_\\___|" + System.lineSeparator();
     private static final String HORIZONTAL_LINE = "____________________________________________________________"
             + System.lineSeparator();
 
-    // Message to greet users.
-    private static final String GREET_MESSAGE = "Hello! I'm Duke" + System.lineSeparator()
+    private static final String MESSAGE_GREET = "Hello! I'm Duke" + System.lineSeparator()
             + "What can I do for you?" + System.lineSeparator();
+    private static final String MESSAGE_EXIT = "Bye. Hope to see you again soon!" + System.lineSeparator();
+    private static final String MESSAGE_TASK_ADDED = "Got it. I've added this task:" + System.lineSeparator()
+            + "  ";
+    private static final String MESSAGE_TASK_COUNT_PREFIX = "Now you have ";
+    private static final String MESSAGE_TASK_COUNT_SUFFIX = " tasks in the list.";
+    private static final String MESSAGE_TASK_DONE = "Nice! I've marked this task as done:" + System.lineSeparator()
+            + "  ";
+    private static final String MESSAGE_TASK_LIST = "Here are the tasks in your list:" + System.lineSeparator();
+    private static final String MESSAGE_TASK_LIST_SEPARATOR = ".";
 
-    // Message upon exiting program.
-    private static final String EXIT_MESSAGE = "Bye. Hope to see you again soon!" + System.lineSeparator();
+
+    public static final String COMMAND_BYE = "bye";
+    public static final String COMMAND_LIST = "list";
+    public static final String COMMAND_DONE = "done";
+    public static final String COMMAND_TODO = "todo";
+    public static final String COMMAND_DEADLINE = "deadline";
+    public static final String COMMAND_DEADLINE_BY_SEPARATOR = " /by ";
+    public static final String COMMAND_EVENT = "event";
+    public static final String COMMAND_EVENT_AT_SEPARATOR = " /at ";
 
     public TextManager() {
+    }
+
+    public static String getUserInput() {
+        return SCANNER.nextLine();
     }
 
     // Wraps message with lines and print
@@ -30,30 +49,30 @@ public class TextManager {
 
     // Prints the greeting message
     public static void printGreetMessage() {
-        System.out.println("Hello from" + System.lineSeparator() + logo);
-        printMessage(GREET_MESSAGE);
+        System.out.println(LOGO_DUKE);
+        printMessage(MESSAGE_GREET);
     }
 
     // Prints the exit message
     public static void printExitMessage() {
-        printMessage(EXIT_MESSAGE);
+        printMessage(MESSAGE_EXIT);
     }
 
     public static void printAddTask(Task task) {
-        printMessage("Got it. I've added this task:" + System.lineSeparator()
-                + "  " + task + System.lineSeparator()
-                + "Now you have " + Task.getTaskCount() + " tasks in the list." + System.lineSeparator());
+        printMessage(MESSAGE_TASK_ADDED
+                + task + System.lineSeparator()
+                + MESSAGE_TASK_COUNT_PREFIX + Task.getTaskCount() + MESSAGE_TASK_COUNT_SUFFIX + System.lineSeparator());
     }
 
     public static void printDoneTask(Task task) {
-        printMessage("Nice! I've marked this task as done:" + System.lineSeparator()
-                + "  " + task + System.lineSeparator());
+        printMessage(MESSAGE_TASK_DONE
+                + task + System.lineSeparator());
     }
 
     public static void printTaskList(Task[] tasks) {
-        printMessage("Here are the tasks in your list:" + System.lineSeparator());
+        printMessage(MESSAGE_TASK_LIST);
         for (int i = 0; i < Task.getTaskCount(); i++) {
-            printMessage((i + 1) + "." + tasks[i] + System.lineSeparator());
+            printMessage((i + 1) + MESSAGE_TASK_LIST_SEPARATOR + tasks[i] + System.lineSeparator());
         }
     }
 }
