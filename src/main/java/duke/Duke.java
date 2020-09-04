@@ -26,7 +26,7 @@ public class Duke {
         TextManager.printGreetMessage();
 
         // Loop until the user inputs "bye"
-        while(isNotBye) {
+        while (isNotBye) {
             inputMessage = TextManager.getUserInput();
             isNotBye = processInputMessage(inputMessage, tasks);
         }
@@ -44,42 +44,39 @@ public class Duke {
 
             command = inputWords[INPUT_RAW_INDEX_COMMAND];
             description = getDescription(inputWords);
-        } catch (IndexOutOfBoundsException e) {
+
+            return processCommand(tasks, command, description);
+        } catch (IndexOutOfBoundsException | DukeException e) {
             ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_NOT_COMMAND);
         }
 
-        return processCommand(tasks, command, description);
+        return true; // Still has not exited so return true
     }
 
-    private static boolean processCommand(Task[] tasks, String command, String description) {
-        try {
-            switch (command) {
-            case TextManager.COMMAND_BYE:
-                return false; // Return false immediately to end the loop
-            case TextManager.COMMAND_LIST:
-                TextManager.printTaskList(tasks);
-                break;
-            case TextManager.COMMAND_DONE:
-                markTaskAsDone(tasks, description);
-                break;
-            case TextManager.COMMAND_TODO:
-                addToDoToTasks(tasks, description);
-                break;
-            case TextManager.COMMAND_DEADLINE:
-                addDeadlineToTasks(tasks, description);
-                break;
-            case TextManager.COMMAND_EVENT:
-                addEventToTasks(tasks, description);
-                break;
-            default:
-                throw new DukeException();
-            }
-        } catch (DukeException e) {
-            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_NOT_COMMAND);
+    private static boolean processCommand(Task[] tasks, String command, String description) throws DukeException {
+        switch (command) {
+        case TextManager.COMMAND_BYE:
+            return false; // Return false immediately to end the loop
+        case TextManager.COMMAND_LIST:
+            TextManager.printTaskList(tasks);
+            break;
+        case TextManager.COMMAND_DONE:
+            markTaskAsDone(tasks, description);
+            break;
+        case TextManager.COMMAND_TODO:
+            addToDoToTasks(tasks, description);
+            break;
+        case TextManager.COMMAND_DEADLINE:
+            addDeadlineToTasks(tasks, description);
+            break;
+        case TextManager.COMMAND_EVENT:
+            addEventToTasks(tasks, description);
+            break;
+        default:
+            throw new DukeException();
         }
 
-        // Still has not exited so return true
-        return true;
+        return true; // Still has not exited so return true
     }
 
     private static int getLastTaskIndex() {
