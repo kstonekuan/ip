@@ -88,6 +88,7 @@ public class Duke {
             if (description.equals("")) {
                 throw new DukeException();
             }
+
             String[] eventInputs = description.split(TextManager.COMMAND_EVENT_AT_SEPARATOR);
             String eventDescription = eventInputs[INPUT_EVENT_INDEX_DESC];
             String eventAtMessage = eventInputs[INPUT_EVENT_INDEX_AT];
@@ -107,6 +108,7 @@ public class Duke {
             if (description.equals("")) {
                 throw new DukeException();
             }
+
             String[] deadlineInputs = description.split(TextManager.COMMAND_DEADLINE_BY_SEPARATOR);
             String deadlineDescription = deadlineInputs[INPUT_DEADLINE_INDEX_DESC];
             String doByMessage = deadlineInputs[INPUT_DEADLINE_INDEX_BY];
@@ -126,6 +128,7 @@ public class Duke {
             if (description.equals("")) {
                 throw new DukeException();
             }
+
             tasks[Task.getTaskCount()] = new ToDo(description);
 
             TextManager.printAddTask(tasks[getLastTaskIndex()]);
@@ -135,9 +138,19 @@ public class Duke {
     }
 
     private static void markTaskAsDone(Task[] tasks, String description) {
-        int taskDoneIndex = Integer.parseInt(description) - 1;
-        tasks[taskDoneIndex].markAsDone();
-        TextManager.printDoneTask(tasks[taskDoneIndex]);
+        try {
+            if (description.equals("")) {
+                throw new DukeException();
+            }
+
+            int taskDoneIndex = Integer.parseInt(description) - 1;
+            tasks[taskDoneIndex].markAsDone();
+            TextManager.printDoneTask(tasks[taskDoneIndex]);
+        } catch (NumberFormatException e) {
+            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DESCRIPTION_DONE_NOT_NUMBER);
+        } catch (DukeException e) {
+            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DESCRIPTION_DONE);
+        }
     }
 
     private static String getDescription(String[] inputWords) {
