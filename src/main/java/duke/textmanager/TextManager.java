@@ -1,3 +1,8 @@
+package duke.textmanager;
+
+import duke.DukeException;
+import duke.task.Task;
+
 import java.util.Scanner;
 
 public class TextManager {
