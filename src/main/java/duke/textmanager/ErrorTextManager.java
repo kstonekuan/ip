@@ -1,3 +1,5 @@
+package duke.textmanager;
+
 public class ErrorTextManager extends TextManager {
 
     private static final String ERROR_PREFIX = "\u2639 OOPS!!! ";

@@ -1,3 +1,12 @@
+package duke;
+
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.ToDo;
+import duke.textmanager.ErrorTextManager;
+import duke.textmanager.TextManager;
+
 public class Duke {
     private static final int TASK_CAPACITY = 100;
     private static final int INPUT_RAW_INDEX_COMMAND = 0;
