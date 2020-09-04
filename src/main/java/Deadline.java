@@ -1,5 +1,5 @@
 public class Deadline extends Task{
-    private static final String deadlineIcon = "[D]";
+    private static final String DEADLINE_ICON = "[D]";
     private String doByMessage;
 
     public Deadline(String description, String doByMessage) {
@@ -9,6 +9,6 @@ public class Deadline extends Task{
 
     @Override
     public String toString() {
-        return deadlineIcon + super.toString() + " (by: " + doByMessage + ")";
+        return DEADLINE_ICON + super.toString() + " (by: " + doByMessage + ")";
     }
 }

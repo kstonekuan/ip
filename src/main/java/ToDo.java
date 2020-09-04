@@ -1,5 +1,5 @@
 public class ToDo extends Task {
-    private static final String toDoIcon = "[T]";
+    private static final String TODO_ICON = "[T]";
 
     public ToDo(String description) {
         super(description);
@@ -7,6 +7,6 @@ public class ToDo extends Task {
 
     @Override
     public String toString() {
-        return toDoIcon + super.toString();
+        return TODO_ICON + super.toString();
     }
 }

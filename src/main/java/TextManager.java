@@ -72,7 +72,7 @@ public class TextManager {
     public static void printTaskList(Task[] tasks) {
         printMessage(MESSAGE_TASK_LIST);
         for (int i = 0; i < Task.getTaskCount(); i++) {
-            printMessage((i + 1) + MESSAGE_TASK_LIST_SEPARATOR + tasks[i] + System.lineSeparator());
+            System.out.println((i + 1) + MESSAGE_TASK_LIST_SEPARATOR + tasks[i]);
         }
     }
 }
