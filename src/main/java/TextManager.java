@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class TextManager {
     private static final Scanner SCANNER = new Scanner(System.in);
-    private static final String LOGO_DUKE = " ____        _        " + System.lineSeparator()
+    private static final String LOGO_DUKE = " ____        _" + System.lineSeparator()
             + "|  _ \\ _   _| | _____ " + System.lineSeparator()
             + "| | | | | | | |/ / _ \\" + System.lineSeparator()
             + "| |_| | |_| |   <  __/" + System.lineSeparator()
@@ -11,17 +11,15 @@ public class TextManager {
             + System.lineSeparator();
 
     private static final String MESSAGE_GREET = "Hello! I'm Duke" + System.lineSeparator()
-            + "What can I do for you?" + System.lineSeparator();
-    private static final String MESSAGE_EXIT = "Bye. Hope to see you again soon!" + System.lineSeparator();
-    private static final String MESSAGE_TASK_ADDED = "Got it. I've added this task:" + System.lineSeparator()
-            + "  ";
+            + "What can I do for you?";
+    private static final String MESSAGE_EXIT = "Bye. Hope to see you again soon!";
+    private static final String MESSAGE_TASK_ADDED = "Got it. I've added this task:";
     private static final String MESSAGE_TASK_COUNT_PREFIX = "Now you have ";
     private static final String MESSAGE_TASK_COUNT_SUFFIX = " tasks in the list.";
-    private static final String MESSAGE_TASK_DONE = "Nice! I've marked this task as done:" + System.lineSeparator()
-            + "  ";
-    private static final String MESSAGE_TASK_LIST = "Here are the tasks in your list:" + System.lineSeparator();
+    private static final String MESSAGE_TASK_DONE = "Nice! I've marked this task as done:";
+    private static final String MESSAGE_TASK_LIST = "Here are the tasks in your list:";
     private static final String MESSAGE_TASK_LIST_SEPARATOR = ".";
-
+    private static final String MESSAGE_SPACING = "  ";
 
     public static final String COMMAND_BYE = "bye";
     public static final String COMMAND_LIST = "list";
@@ -40,11 +38,11 @@ public class TextManager {
     }
 
     // Wraps message with lines and print
-    public static void printMessage(String message) {
+    protected static void printMessage(String message) {
         if (message == null) {
             return;
         }
-        System.out.println(HORIZONTAL_LINE + message + HORIZONTAL_LINE);
+        System.out.println(HORIZONTAL_LINE + message + System.lineSeparator() + HORIZONTAL_LINE);
     }
 
     // Prints the greeting message
@@ -59,20 +57,28 @@ public class TextManager {
     }
 
     public static void printAddTask(Task task) {
-        printMessage(MESSAGE_TASK_ADDED
-                + task + System.lineSeparator()
-                + MESSAGE_TASK_COUNT_PREFIX + Task.getTaskCount() + MESSAGE_TASK_COUNT_SUFFIX + System.lineSeparator());
+        printMessage(MESSAGE_TASK_ADDED + System.lineSeparator()
+                + MESSAGE_SPACING + task + System.lineSeparator()
+                + MESSAGE_TASK_COUNT_PREFIX + Task.getTaskCount() + MESSAGE_TASK_COUNT_SUFFIX);
     }
 
     public static void printDoneTask(Task task) {
-        printMessage(MESSAGE_TASK_DONE
-                + task + System.lineSeparator());
+        printMessage(MESSAGE_TASK_DONE + System.lineSeparator()
+                + MESSAGE_SPACING + task);
     }
 
     public static void printTaskList(Task[] tasks) {
-        printMessage(MESSAGE_TASK_LIST);
-        for (int i = 0; i < Task.getTaskCount(); i++) {
-            System.out.println((i + 1) + MESSAGE_TASK_LIST_SEPARATOR + tasks[i]);
+        try {
+            if (Task.getTaskCount() <= 0) {
+                throw new DukeException();
+            }
+            String taskList = MESSAGE_TASK_LIST;
+            for (int i = 0; i < Task.getTaskCount(); i++) {
+                taskList += System.lineSeparator() + (i + 1) + MESSAGE_TASK_LIST_SEPARATOR + tasks[i];
+            }
+            printMessage(taskList);
+        } catch (DukeException e) {
+            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_NO_TASKS);
         }
     }
 }
