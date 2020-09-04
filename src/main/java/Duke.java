@@ -27,11 +27,22 @@ public class Duke {
     }
 
     private static boolean processInputMessage(String inputMessage, Task[] tasks) {
-        String[] inputWords = inputMessage.split(INPUT_DELIMITER);
+        String command = "";
+        String description = "";
 
-        String command = inputWords[INPUT_RAW_INDEX_COMMAND];
-        String description = getDescription(inputWords);
+        try {
+            String[] inputWords = inputMessage.split(INPUT_DELIMITER);
 
+            command = inputWords[INPUT_RAW_INDEX_COMMAND];
+            description = getDescription(inputWords);
+        } catch (IndexOutOfBoundsException e) {
+            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_NOT_COMMAND);
+        }
+
+        return processCommand(tasks, command, description);
+    }
+
+    private static boolean processCommand(Task[] tasks, String command, String description) {
         try {
             switch (command) {
             case TextManager.COMMAND_BYE:
