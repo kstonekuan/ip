@@ -21,7 +21,7 @@ public class Duke {
 
     public static void main(String[] args) {
         String inputMessage;
-        ArrayList<Task> tasks = new ArrayList<>();
+        ArrayList<Task> tasks = Task.tasks;
         boolean isNotBye = true;
 
         // Greet upon starting
@@ -85,24 +85,25 @@ public class Duke {
     }
 
     private static void deleteFromTasks(ArrayList<Task> tasks, String description) {
-        // Implement Tasks as Arraylist first before implementing this method
-//        try {
-//            if (description.equals("")) {
-//                throw new DukeException();
-//            }
-//
-//            int taskDoneIndex = Integer.parseInt(description) - 1;
-//            tasks[taskDoneIndex].markAsDone();
-//            TextManager.printDoneTask(tasks[taskDoneIndex]);
-//        } catch (NumberFormatException e) {
-//            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DESCRIPTION_INDEX_NOT_NUMBER);
-//        } catch (DukeException e) {
-//            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DESCRIPTION_DELETE);
-//        }
+        try {
+            if (description.equals("")) {
+                throw new DukeException();
+            }
+
+            int taskDeleteIndex = Integer.parseInt(description) - 1;
+            TextManager.printDeleteTask(tasks.get(taskDeleteIndex));
+            tasks.remove(taskDeleteIndex);
+        } catch (NumberFormatException e) {
+            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DESCRIPTION_INDEX_NOT_NUMBER);
+        } catch (DukeException e) {
+            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DESCRIPTION_DELETE);
+        } catch (IndexOutOfBoundsException e) {
+            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DESCRIPTION_INDEX_OUT_OF_BOUNDS);
+        }
     }
 
     private static int getLastTaskIndex(ArrayList<Task> tasks) {
-        return tasks.size() - 1;
+        return Task.getTaskCount() - 1;
     }
 
     private static void addEventToTasks(ArrayList<Task> tasks, String description) {
@@ -172,6 +173,8 @@ public class Duke {
             ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DESCRIPTION_INDEX_NOT_NUMBER);
         } catch (DukeException e) {
             ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DESCRIPTION_DONE);
+        } catch (IndexOutOfBoundsException e) {
+            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DESCRIPTION_INDEX_OUT_OF_BOUNDS);
         }
     }
 

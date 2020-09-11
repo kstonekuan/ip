@@ -11,7 +11,9 @@ public class ErrorTextManager extends TextManager {
     public static final String ERROR_DESCRIPTION_EVENT_AT = "The description of an event must have /at (at).";
     public static final String ERROR_NO_TASKS = "You have no tasks in your list.";
     public static final String ERROR_DESCRIPTION_DONE = "The task to be done cannot be empty.";
-    public static final String ERROR_DESCRIPTION_DONE_NOT_NUMBER = "Please select the task by number.";
+    public static final String ERROR_DESCRIPTION_INDEX_NOT_NUMBER = "Please select the task by number.";
+    public static final String ERROR_DESCRIPTION_DELETE = "The task to be deleted cannot be empty.";
+    public static final String ERROR_DESCRIPTION_INDEX_OUT_OF_BOUNDS = "You selected a number not present in the list.";
 
     public ErrorTextManager() {
         super();
