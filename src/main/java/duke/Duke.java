@@ -61,7 +61,6 @@ public class Duke {
     private static boolean processCommand(Task[] tasks, String command, String description) throws DukeException, IOException {
         switch (command) {
         case TextManager.COMMAND_BYE:
-            Database.saveTasks(tasks);
             return false; // Return false immediately to end the loop
         case TextManager.COMMAND_LIST:
             TextManager.printTaskList(tasks);
@@ -82,6 +81,7 @@ public class Duke {
             throw new DukeException();
         }
 
+        Database.saveTasks(tasks);
         return true; // Still has not exited so return true
     }
 
