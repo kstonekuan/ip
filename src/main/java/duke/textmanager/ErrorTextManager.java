@@ -13,6 +13,8 @@ public class ErrorTextManager extends TextManager {
     public static final String ERROR_DESCRIPTION_DONE = "The task to be done cannot be empty.";
     public static final String ERROR_DESCRIPTION_DONE_NOT_NUMBER = "Please select the task by number.";
 
+    public static final String ERROR_DATA_FILE = "There was an issue using your data file, it might be corrupted.";
+
     public ErrorTextManager() {
         super();
     }

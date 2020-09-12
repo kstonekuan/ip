@@ -1,7 +1,7 @@
 package duke.task;
 
 public class ToDo extends Task {
-    private static final String TODO_ICON = "[T]";
+    public static final String TODO_ICON = "[T]";
 
     public ToDo(String description) {
         super(description);
