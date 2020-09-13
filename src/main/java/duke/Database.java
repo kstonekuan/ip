@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Database {
     private static final String DIR_CURRENT_PATH = System.getProperty("user.dir");
     private static final Path DIR_DATA_PATH = Paths.get(DIR_CURRENT_PATH, "data");
-    private static final Path FILE_PATH = Paths.get(DIR_CURRENT_PATH, "data", "duke.text");
+    private static final Path FILE_PATH = Paths.get(DIR_CURRENT_PATH, "data", "duke.txt");
     private static final String LOAD_DEADLINE_BY_SEPARATOR = " \\(by: ";
     public static final String LOAD_EVENT_AT_SEPARATOR = " \\(at: ";
     public static final int LOAD_TASK_DESCRIPTION_INDEX = 7;

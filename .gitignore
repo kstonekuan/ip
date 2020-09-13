@@ -18,3 +18,5 @@ bin/
 /text-ui-test/data
 
 /data
+
+/src/main/java/META-INF
