@@ -38,6 +38,14 @@ public class TextManager {
     public static final String COMMAND_EVENT_AT_SEPARATOR = " /at ";
     public static final String COMMAND_DELETE = "delete";
 
+    public static final int INPUT_RAW_INDEX_COMMAND = 0;
+    public static final int INPUT_RAW_INDEX_DESC = 1;
+    public static final int INPUT_DEADLINE_INDEX_DESC = 0;
+    public static final int INPUT_DEADLINE_INDEX_BY = 1;
+    public static final int INPUT_EVENT_INDEX_DESC = 0;
+    public static final int INPUT_EVENT_INDEX_AT = 1;
+    public static final String INPUT_DELIMITER = " ";
+
     public TextManager() {
     }
 

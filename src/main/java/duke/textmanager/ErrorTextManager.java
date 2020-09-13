@@ -15,6 +15,8 @@ public class ErrorTextManager extends TextManager {
     public static final String ERROR_DESCRIPTION_DELETE = "The task to be deleted cannot be empty.";
     public static final String ERROR_DESCRIPTION_INDEX_OUT_OF_BOUNDS = "You selected a number not present in the list.";
 
+    public static final String ERROR_DATA_FILE = "There was an issue using your data file, it might be corrupted.";
+
     public ErrorTextManager() {
         super();
     }

@@ -3,10 +3,9 @@ package duke.task;
 import java.util.ArrayList;
 
 public class Task {
-    private static final String TICK_ICON = "[\u2713]";
-    private static final String CROSS_ICON = "[\u2718]";
     public static ArrayList<Task> tasks = new ArrayList<>();
-
+    public static final String TICK_ICON = "[\u2713]";
+    public static final String CROSS_ICON = "[\u2718]";
     protected String description;
     protected boolean isDone;
 
