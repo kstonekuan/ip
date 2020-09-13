@@ -3,6 +3,7 @@ package duke.textmanager;
 import duke.DukeException;
 import duke.task.Task;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TextManager {
@@ -24,6 +25,7 @@ public class TextManager {
     private static final String MESSAGE_TASK_DONE = "Nice! I've marked this task as done:";
     private static final String MESSAGE_TASK_LIST = "Here are the tasks in your list:";
     private static final String MESSAGE_TASK_LIST_SEPARATOR = ".";
+    private static final String MESSAGE_TASK_DELETED = "Noted. I've removed this task:";
     private static final String MESSAGE_SPACING = "  ";
 
     public static final String COMMAND_BYE = "bye";
@@ -34,6 +36,7 @@ public class TextManager {
     public static final String COMMAND_DEADLINE_BY_SEPARATOR = " /by ";
     public static final String COMMAND_EVENT = "event";
     public static final String COMMAND_EVENT_AT_SEPARATOR = " /at ";
+    public static final String COMMAND_DELETE = "delete";
 
     public TextManager() {
     }
@@ -67,19 +70,25 @@ public class TextManager {
                 + MESSAGE_TASK_COUNT_PREFIX + Task.getTaskCount() + MESSAGE_TASK_COUNT_SUFFIX);
     }
 
+    public static void printDeleteTask(Task task) {
+        printMessage(MESSAGE_TASK_DELETED + System.lineSeparator()
+                + MESSAGE_SPACING + task + System.lineSeparator()
+                + MESSAGE_TASK_COUNT_PREFIX + (Task.getTaskCount() - 1) + MESSAGE_TASK_COUNT_SUFFIX);
+    }
+
     public static void printDoneTask(Task task) {
         printMessage(MESSAGE_TASK_DONE + System.lineSeparator()
                 + MESSAGE_SPACING + task);
     }
 
-    public static void printTaskList(Task[] tasks) {
+    public static void printTaskList(ArrayList<Task> tasks) {
         try {
             if (Task.getTaskCount() <= 0) {
                 throw new DukeException();
             }
             String taskList = MESSAGE_TASK_LIST;
             for (int i = 0; i < Task.getTaskCount(); i++) {
-                taskList += System.lineSeparator() + (i + 1) + MESSAGE_TASK_LIST_SEPARATOR + tasks[i];
+                taskList += System.lineSeparator() + (i + 1) + MESSAGE_TASK_LIST_SEPARATOR + tasks.get(i);
             }
             printMessage(taskList);
         } catch (DukeException e) {

@@ -1,18 +1,22 @@
 package duke.task;
 
+import java.util.ArrayList;
+
 public class Task {
+    private static final String TICK_ICON = "[\u2713]";
+    private static final String CROSS_ICON = "[\u2718]";
+    public static ArrayList<Task> tasks = new ArrayList<>();
+
     protected String description;
     protected boolean isDone;
-    protected static int taskCount = 0;
 
     public Task(String description) {
         this.description = description;
         this.isDone = false;
-        taskCount++;
     }
 
     public String getStatusIcon() {
-        return (isDone ? "[\u2713]" : "[\u2718]"); //return tick or X symbols
+        return (isDone ? TICK_ICON : CROSS_ICON); //return tick or X symbols
     }
 
     @Override
@@ -25,6 +29,6 @@ public class Task {
     }
 
     public static int getTaskCount() {
-        return taskCount;
+        return tasks.size();
     }
 }

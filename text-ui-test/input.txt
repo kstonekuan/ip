@@ -15,6 +15,11 @@ done borrow book
 done 1
 done 2
 list
+delete 3
+delete 3
+delete 20
+delete
+list
 blah
 
 
