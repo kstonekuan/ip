@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Storage {
     private static final String DIR_CURRENT_PATH = System.getProperty("user.dir");
     private static final Path DIR_DATA_PATH = Paths.get(DIR_CURRENT_PATH, "data");
-    private static final Path FILE_PATH = Paths.get(DIR_CURRENT_PATH, "data", "duke.txt");
+    private Path filePath;
     private static final String LOAD_DEADLINE_BY_SEPARATOR = " \\(by: ";
     public static final String LOAD_EVENT_AT_SEPARATOR = " \\(at: ";
     public static final int LOAD_TASK_DESCRIPTION_INDEX = 7;
@@ -23,25 +23,26 @@ public class Storage {
     public static final int LOAD_TASK_TYPE_INDEX_END = 3;
     public static final int LOAD_TASK_STATUS_INDEX_START = 3;
     public static final int LOAD_TASK_STATUS_INDEX_END = 6;
-    private static boolean fileExists = Files.exists(FILE_PATH);
 
-    public Storage() {
+    public Storage(String filePath) {
+        this.filePath = Paths.get(DIR_CURRENT_PATH, filePath.split("/"));
     }
 
-    public static void saveTasks(ArrayList<Task> tasks) throws IOException {
+    public void save(ArrayList<Task> tasks) throws IOException {
         ArrayList<String> tasksAsStringList = new ArrayList<>();
 
         for (Task task: tasks) {
             tasksAsStringList.add(task.toString());
         }
 
-        Files.write(FILE_PATH, tasksAsStringList);
+        Files.write(filePath, tasksAsStringList);
     }
 
-    public static void load(ArrayList<Task> tasks) throws IOException, DukeException {
+    public ArrayList<Task> load() throws IOException, DukeException {
         createFileIfNotExists();
 
-        ArrayList<String> tasksAsStringList = (ArrayList<String>) Files.readAllLines(FILE_PATH);
+        ArrayList<String> tasksAsStringList = (ArrayList<String>) Files.readAllLines(filePath);
+        ArrayList<Task> tasks = new ArrayList<>();
 
         for (String taskAsString: tasksAsStringList) {
             String description = taskAsString.substring(LOAD_TASK_DESCRIPTION_INDEX);
@@ -55,6 +56,8 @@ public class Storage {
 
             tasks.add(task);
         }
+
+        return tasks;
     }
 
     private static Task getTaskFromString(String description, String taskType) throws DukeException {
@@ -76,11 +79,11 @@ public class Storage {
         }
     }
 
-    private static void createFileIfNotExists() throws IOException {
+    private void createFileIfNotExists() throws IOException {
+        boolean fileExists = Files.exists(filePath);
         if (!fileExists) {
             Files.createDirectories(DIR_DATA_PATH);
-            Files.createFile(FILE_PATH);
-            fileExists = Files.exists(FILE_PATH);
+            Files.createFile(filePath);
         }
     }
 

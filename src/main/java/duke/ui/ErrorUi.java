@@ -21,7 +21,7 @@ public class ErrorUi extends Ui {
         super();
     }
 
-    public static void printErrorMessage(String errorMessage) {
+    public void printErrorMessage(String errorMessage) {
         printMessage(ERROR_PREFIX + errorMessage);
     }
 }

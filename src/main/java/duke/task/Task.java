@@ -3,7 +3,6 @@ package duke.task;
 import java.util.ArrayList;
 
 public class Task {
-    public static ArrayList<Task> tasks = new ArrayList<>();
     public static final String TICK_ICON = "[\u2713]";
     public static final String CROSS_ICON = "[\u2718]";
     protected String description;
@@ -25,9 +24,5 @@ public class Task {
 
     public void markAsDone() {
         isDone = true;
-    }
-
-    public static int getTaskCount() {
-        return tasks.size();
     }
 }

@@ -2,6 +2,7 @@ package duke.ui;
 
 import duke.DukeException;
 import duke.task.Task;
+import duke.task.TaskList;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -49,7 +50,7 @@ public class Ui {
     public Ui() {
     }
 
-    public static String getUserInput() {
+    public String getUserInput() {
         return SCANNER.nextLine();
     }
 
@@ -62,45 +63,46 @@ public class Ui {
     }
 
     // Prints the greeting message
-    public static void printGreetMessage() {
+    public void printGreetMessage() {
         System.out.println(LOGO_DUKE);
         printMessage(MESSAGE_GREET);
     }
 
     // Prints the exit message
-    public static void printExitMessage() {
+    public void printExitMessage() {
         printMessage(MESSAGE_EXIT);
     }
 
-    public static void printAddTask(Task task) {
+    public void printAddTask(Task task, int taskCount) {
         printMessage(MESSAGE_TASK_ADDED + System.lineSeparator()
                 + MESSAGE_SPACING + task + System.lineSeparator()
-                + MESSAGE_TASK_COUNT_PREFIX + Task.getTaskCount() + MESSAGE_TASK_COUNT_SUFFIX);
+                + MESSAGE_TASK_COUNT_PREFIX + taskCount + MESSAGE_TASK_COUNT_SUFFIX);
     }
 
-    public static void printDeleteTask(Task task) {
+    public void printDeleteTask(Task task, int taskCount) {
         printMessage(MESSAGE_TASK_DELETED + System.lineSeparator()
                 + MESSAGE_SPACING + task + System.lineSeparator()
-                + MESSAGE_TASK_COUNT_PREFIX + (Task.getTaskCount() - 1) + MESSAGE_TASK_COUNT_SUFFIX);
+                + MESSAGE_TASK_COUNT_PREFIX + taskCount + MESSAGE_TASK_COUNT_SUFFIX);
     }
 
-    public static void printDoneTask(Task task) {
+    public void printDoneTask(Task task) {
         printMessage(MESSAGE_TASK_DONE + System.lineSeparator()
                 + MESSAGE_SPACING + task);
     }
 
-    public static void printTaskList(ArrayList<Task> tasks) {
+    public void printTaskList(ArrayList<Task> tasks, int taskCount) {
         try {
-            if (Task.getTaskCount() <= 0) {
+            if (taskCount <= 0) {
                 throw new DukeException();
             }
             String taskList = MESSAGE_TASK_LIST;
-            for (int i = 0; i < Task.getTaskCount(); i++) {
+            for (int i = 0; i < taskCount; i++) {
                 taskList += System.lineSeparator() + (i + 1) + MESSAGE_TASK_LIST_SEPARATOR + tasks.get(i);
             }
             printMessage(taskList);
         } catch (DukeException e) {
-            ErrorUi.printErrorMessage(ErrorUi.ERROR_NO_TASKS);
+            ErrorUi errorUi = new ErrorUi();
+            errorUi.printErrorMessage(ErrorUi.ERROR_NO_TASKS);
         }
     }
 }
