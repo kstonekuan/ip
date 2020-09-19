@@ -11,9 +11,9 @@ if [ -e "./ACTUAL.TXT" ]
 then
     rm ACTUAL.TXT
 fi
-if [ -e "../data/duke.txt" ]
+if [ -e "./data/tasks.txt" ]
 then
-    rm ../data/duke.txt
+    rm data/tasks.txt
 fi
 
 # compile the code into the bin folder, terminates if error occurred
