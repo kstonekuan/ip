@@ -1,6 +1,6 @@
-package duke.textmanager;
+package duke.ui;
 
-public class ErrorTextManager extends TextManager {
+public class ErrorUi extends Ui {
 
     private static final String ERROR_PREFIX = "\u2639 OOPS!!! ";
     public static final String ERROR_NOT_COMMAND = "I'm sorry, but I don't know what that means :-(.";
@@ -17,7 +17,7 @@ public class ErrorTextManager extends TextManager {
 
     public static final String ERROR_DATA_FILE = "There was an issue using your data file, it might be corrupted.";
 
-    public ErrorTextManager() {
+    public ErrorUi() {
         super();
     }
 

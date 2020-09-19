@@ -4,7 +4,7 @@ import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
-import duke.textmanager.TextManager;
+import duke.ui.Ui;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -93,8 +93,8 @@ public class Database {
     private static Task loadEvent(String description) {
         Task task;
         String[] eventInputs = description.split(LOAD_EVENT_AT_SEPARATOR);
-        String eventDescription = eventInputs[TextManager.INPUT_EVENT_INDEX_DESC];
-        String eventAtMessageWithBracket = eventInputs[TextManager.INPUT_EVENT_INDEX_AT];
+        String eventDescription = eventInputs[Ui.INPUT_EVENT_INDEX_DESC];
+        String eventAtMessageWithBracket = eventInputs[Ui.INPUT_EVENT_INDEX_AT];
         String eventAtMessage = eventAtMessageWithBracket.substring(0, eventAtMessageWithBracket.length() - 1);
         task = new Event(eventDescription, eventAtMessage);
         return task;
@@ -103,8 +103,8 @@ public class Database {
     private static Task loadDeadline(String description) {
         Task task;
         String[] deadlineInputs = description.split(LOAD_DEADLINE_BY_SEPARATOR);
-        String deadlineDescription = deadlineInputs[TextManager.INPUT_DEADLINE_INDEX_DESC];
-        String doByMessageWithBracket = deadlineInputs[TextManager.INPUT_DEADLINE_INDEX_BY];
+        String deadlineDescription = deadlineInputs[Ui.INPUT_DEADLINE_INDEX_DESC];
+        String doByMessageWithBracket = deadlineInputs[Ui.INPUT_DEADLINE_INDEX_BY];
         String doByMessage = doByMessageWithBracket.substring(0, doByMessageWithBracket.length() - 1);
         task = new Deadline(deadlineDescription, doByMessage);
         return task;

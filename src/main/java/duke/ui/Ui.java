@@ -1,4 +1,4 @@
-package duke.textmanager;
+package duke.ui;
 
 import duke.DukeException;
 import duke.task.Task;
@@ -6,7 +6,7 @@ import duke.task.Task;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class TextManager {
+public class Ui {
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final String LOGO_DUKE = " ____        _" + System.lineSeparator()
             + "|  _ \\ _   _| | _____ " + System.lineSeparator()
@@ -46,7 +46,7 @@ public class TextManager {
     public static final int INPUT_EVENT_INDEX_AT = 1;
     public static final String INPUT_DELIMITER = " ";
 
-    public TextManager() {
+    public Ui() {
     }
 
     public static String getUserInput() {
@@ -100,7 +100,7 @@ public class TextManager {
             }
             printMessage(taskList);
         } catch (DukeException e) {
-            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_NO_TASKS);
+            ErrorUi.printErrorMessage(ErrorUi.ERROR_NO_TASKS);
         }
     }
 }

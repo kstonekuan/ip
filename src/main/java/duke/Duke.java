@@ -4,8 +4,8 @@ import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
-import duke.textmanager.ErrorTextManager;
-import duke.textmanager.TextManager;
+import duke.ui.ErrorUi;
+import duke.ui.Ui;
 
 import java.util.ArrayList;
 import java.io.IOException;
@@ -19,21 +19,21 @@ public class Duke {
         try {
             Database.loadTasks(tasks);
         } catch (IOException | DukeException e) {
-            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DATA_FILE);
+            ErrorUi.printErrorMessage(ErrorUi.ERROR_DATA_FILE);
             return;
         }
 
         // Greet upon starting
-        TextManager.printGreetMessage();
+        Ui.printGreetMessage();
 
         // Loop until the user inputs "bye"
         while (isNotBye) {
-            inputMessage = TextManager.getUserInput();
+            inputMessage = Ui.getUserInput();
             isNotBye = processInputMessage(inputMessage, tasks);
         }
 
         // Exit the program
-        TextManager.printExitMessage();
+        Ui.printExitMessage();
     }
 
     private static boolean processInputMessage(String inputMessage, ArrayList<Task> tasks) {
@@ -41,16 +41,16 @@ public class Duke {
         String description = "";
 
         try {
-            String[] inputWords = inputMessage.split(TextManager.INPUT_DELIMITER);
+            String[] inputWords = inputMessage.split(Ui.INPUT_DELIMITER);
 
-            command = inputWords[TextManager.INPUT_RAW_INDEX_COMMAND];
+            command = inputWords[Ui.INPUT_RAW_INDEX_COMMAND];
             description = getDescription(inputWords);
 
             return processCommand(tasks, command, description);
         } catch (IndexOutOfBoundsException | DukeException e) {
-            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_NOT_COMMAND);
+            ErrorUi.printErrorMessage(ErrorUi.ERROR_NOT_COMMAND);
         } catch (IOException e) {
-            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DATA_FILE);
+            ErrorUi.printErrorMessage(ErrorUi.ERROR_DATA_FILE);
         }
 
         return true; // Still has not exited so return true
@@ -59,24 +59,24 @@ public class Duke {
     private static boolean processCommand(ArrayList<Task> tasks, String command, String description)
             throws DukeException, IOException {
         switch (command) {
-        case TextManager.COMMAND_BYE:
+        case Ui.COMMAND_BYE:
             return false; // Return false immediately to end the loop
-        case TextManager.COMMAND_LIST:
-            TextManager.printTaskList(tasks);
+        case Ui.COMMAND_LIST:
+            Ui.printTaskList(tasks);
             break;
-        case TextManager.COMMAND_DONE:
+        case Ui.COMMAND_DONE:
             markTaskAsDone(tasks, description);
             break;
-        case TextManager.COMMAND_TODO:
+        case Ui.COMMAND_TODO:
             addToDoToTasks(tasks, description);
             break;
-        case TextManager.COMMAND_DEADLINE:
+        case Ui.COMMAND_DEADLINE:
             addDeadlineToTasks(tasks, description);
             break;
-        case TextManager.COMMAND_EVENT:
+        case Ui.COMMAND_EVENT:
             addEventToTasks(tasks, description);
             break;
-        case TextManager.COMMAND_DELETE:
+        case Ui.COMMAND_DELETE:
             deleteFromTasks(tasks, description);
             break;
         default:
@@ -94,14 +94,14 @@ public class Duke {
             }
 
             int taskDeleteIndex = Integer.parseInt(description) - 1;
-            TextManager.printDeleteTask(tasks.get(taskDeleteIndex));
+            Ui.printDeleteTask(tasks.get(taskDeleteIndex));
             tasks.remove(taskDeleteIndex);
         } catch (NumberFormatException e) {
-            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DESCRIPTION_INDEX_NOT_NUMBER);
+            ErrorUi.printErrorMessage(ErrorUi.ERROR_DESCRIPTION_INDEX_NOT_NUMBER);
         } catch (DukeException e) {
-            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DESCRIPTION_DELETE);
+            ErrorUi.printErrorMessage(ErrorUi.ERROR_DESCRIPTION_DELETE);
         } catch (IndexOutOfBoundsException e) {
-            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DESCRIPTION_INDEX_OUT_OF_BOUNDS);
+            ErrorUi.printErrorMessage(ErrorUi.ERROR_DESCRIPTION_INDEX_OUT_OF_BOUNDS);
         }
     }
 
@@ -115,17 +115,17 @@ public class Duke {
                 throw new DukeException();
             }
 
-            String[] eventInputs = description.split(TextManager.COMMAND_EVENT_AT_SEPARATOR);
-            String eventDescription = eventInputs[TextManager.INPUT_EVENT_INDEX_DESC];
-            String eventAtMessage = eventInputs[TextManager.INPUT_EVENT_INDEX_AT];
+            String[] eventInputs = description.split(Ui.COMMAND_EVENT_AT_SEPARATOR);
+            String eventDescription = eventInputs[Ui.INPUT_EVENT_INDEX_DESC];
+            String eventAtMessage = eventInputs[Ui.INPUT_EVENT_INDEX_AT];
 
             tasks.add(new Event(eventDescription, eventAtMessage));
 
-            TextManager.printAddTask(tasks.get(getLastTaskIndex(tasks)));
+            Ui.printAddTask(tasks.get(getLastTaskIndex(tasks)));
         } catch (DukeException e) {
-            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DESCRIPTION_EVENT);
+            ErrorUi.printErrorMessage(ErrorUi.ERROR_DESCRIPTION_EVENT);
         } catch (IndexOutOfBoundsException e) {
-            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DESCRIPTION_EVENT_AT);
+            ErrorUi.printErrorMessage(ErrorUi.ERROR_DESCRIPTION_EVENT_AT);
         }
     }
 
@@ -135,17 +135,17 @@ public class Duke {
                 throw new DukeException();
             }
 
-            String[] deadlineInputs = description.split(TextManager.COMMAND_DEADLINE_BY_SEPARATOR);
-            String deadlineDescription = deadlineInputs[TextManager.INPUT_DEADLINE_INDEX_DESC];
-            String doByMessage = deadlineInputs[TextManager.INPUT_DEADLINE_INDEX_BY];
+            String[] deadlineInputs = description.split(Ui.COMMAND_DEADLINE_BY_SEPARATOR);
+            String deadlineDescription = deadlineInputs[Ui.INPUT_DEADLINE_INDEX_DESC];
+            String doByMessage = deadlineInputs[Ui.INPUT_DEADLINE_INDEX_BY];
 
             tasks.add(new Deadline(deadlineDescription, doByMessage));
 
-            TextManager.printAddTask(tasks.get(getLastTaskIndex(tasks)));
+            Ui.printAddTask(tasks.get(getLastTaskIndex(tasks)));
         } catch (DukeException e) {
-            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DESCRIPTION_DEADLINE);
+            ErrorUi.printErrorMessage(ErrorUi.ERROR_DESCRIPTION_DEADLINE);
         } catch (IndexOutOfBoundsException e) {
-            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DESCRIPTION_DEADLINE_BY);
+            ErrorUi.printErrorMessage(ErrorUi.ERROR_DESCRIPTION_DEADLINE_BY);
         }
     }
 
@@ -157,9 +157,9 @@ public class Duke {
 
             tasks.add(new ToDo(description));
 
-            TextManager.printAddTask(tasks.get(getLastTaskIndex(tasks)));
+            Ui.printAddTask(tasks.get(getLastTaskIndex(tasks)));
         } catch (DukeException e) {
-            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DESCRIPTION_TODO);
+            ErrorUi.printErrorMessage(ErrorUi.ERROR_DESCRIPTION_TODO);
         }
     }
 
@@ -171,21 +171,21 @@ public class Duke {
 
             int taskDoneIndex = Integer.parseInt(description) - 1;
             tasks.get(taskDoneIndex).markAsDone();
-            TextManager.printDoneTask(tasks.get(taskDoneIndex));
+            Ui.printDoneTask(tasks.get(taskDoneIndex));
         } catch (NumberFormatException e) {
-            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DESCRIPTION_INDEX_NOT_NUMBER);
+            ErrorUi.printErrorMessage(ErrorUi.ERROR_DESCRIPTION_INDEX_NOT_NUMBER);
         } catch (DukeException e) {
-            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DESCRIPTION_DONE);
+            ErrorUi.printErrorMessage(ErrorUi.ERROR_DESCRIPTION_DONE);
         } catch (IndexOutOfBoundsException e) {
-            ErrorTextManager.printErrorMessage(ErrorTextManager.ERROR_DESCRIPTION_INDEX_OUT_OF_BOUNDS);
+            ErrorUi.printErrorMessage(ErrorUi.ERROR_DESCRIPTION_INDEX_OUT_OF_BOUNDS);
         }
     }
 
     private static String getDescription(String[] inputWords) {
-        if (inputWords.length > TextManager.INPUT_RAW_INDEX_DESC) {
-            String description = inputWords[TextManager.INPUT_RAW_INDEX_DESC];
+        if (inputWords.length > Ui.INPUT_RAW_INDEX_DESC) {
+            String description = inputWords[Ui.INPUT_RAW_INDEX_DESC];
             for (int i = 2; i < inputWords.length; i++) {
-                description = String.join(TextManager.INPUT_DELIMITER, description, inputWords[i]);
+                description = String.join(Ui.INPUT_DELIMITER, description, inputWords[i]);
             }
             return description;
         } else {
