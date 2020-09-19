@@ -12,7 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class Database {
+public class Storage {
     private static final String DIR_CURRENT_PATH = System.getProperty("user.dir");
     private static final Path DIR_DATA_PATH = Paths.get(DIR_CURRENT_PATH, "data");
     private static final Path FILE_PATH = Paths.get(DIR_CURRENT_PATH, "data", "duke.txt");
@@ -25,7 +25,7 @@ public class Database {
     public static final int LOAD_TASK_STATUS_INDEX_END = 6;
     private static boolean fileExists = Files.exists(FILE_PATH);
 
-    public Database() {
+    public Storage() {
     }
 
     public static void saveTasks(ArrayList<Task> tasks) throws IOException {
@@ -38,7 +38,7 @@ public class Database {
         Files.write(FILE_PATH, tasksAsStringList);
     }
 
-    public static void loadTasks(ArrayList<Task> tasks) throws IOException, DukeException {
+    public static void load(ArrayList<Task> tasks) throws IOException, DukeException {
         createFileIfNotExists();
 
         ArrayList<String> tasksAsStringList = (ArrayList<String>) Files.readAllLines(FILE_PATH);

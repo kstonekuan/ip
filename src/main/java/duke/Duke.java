@@ -11,13 +11,14 @@ import java.util.ArrayList;
 import java.io.IOException;
 
 public class Duke {
+
     public static void main(String[] args) {
         String inputMessage;
         ArrayList<Task> tasks = Task.tasks;
         boolean isNotBye = true;
 
         try {
-            Database.loadTasks(tasks);
+            Storage.load(tasks);
         } catch (IOException | DukeException e) {
             ErrorUi.printErrorMessage(ErrorUi.ERROR_DATA_FILE);
             return;
@@ -83,7 +84,7 @@ public class Duke {
             throw new DukeException();
         }
 
-        Database.saveTasks(tasks);
+        Storage.saveTasks(tasks);
         return true; // Still has not exited so return true
     }
 
