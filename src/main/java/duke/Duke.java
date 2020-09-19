@@ -20,27 +20,33 @@ public class Duke {
         try {
             tasks = new TaskList(storage.load());
         } catch (DukeException | IOException e) {
-            //ui.showLoadingError();
-            errorUi.printErrorMessage(ErrorUi.ERROR_DATA_FILE);
+            errorUi.printErrorMessage(ErrorUi.ERROR_DATA_LOAD);
             tasks = new TaskList();
         }
     }
 
     public void run() {
-        String inputMessage;
+        start();
+        runCommandLoopUntilByeCommand();
+        exit();
+    }
+
+    private void runCommandLoopUntilByeCommand() {
         boolean isNotBye = true;
 
-        // Greet upon starting
-        ui.printGreetMessage();
-
-        // Loop until the user inputs "bye"
         while (isNotBye) {
-            inputMessage = ui.getUserInput();
+            String inputMessage = ui.getUserInput();
             isNotBye = processInputMessage(inputMessage);
         }
+    }
 
-        // Exit the program
+    private void exit() {
         ui.printExitMessage();
+        System.exit(0);
+    }
+
+    private void start() {
+        ui.printGreetMessage();
     }
 
     public static void main(String[] args) {
@@ -50,46 +56,16 @@ public class Duke {
     private boolean processInputMessage(String inputMessage) {
         try {
             Command command = Parser.parseCommand(inputMessage);
-
-            return executeCommand(command);
+            return command.execute(tasks, storage);
         } catch (IndexOutOfBoundsException | DukeException e) {
             errorUi.printErrorMessage(ErrorUi.ERROR_NOT_COMMAND);
         } catch (IOException e) {
-            errorUi.printErrorMessage(ErrorUi.ERROR_DATA_FILE);
+            errorUi.printErrorMessage(ErrorUi.ERROR_DATA_LOAD);
         }
 
         return true; // Still has not exited so return true
     }
 
-    private boolean executeCommand(Command command)
-            throws DukeException, IOException {
-        switch (command.getType()) {
-        case Ui.COMMAND_BYE:
-            return false; // Return false immediately to end the loop
-        case Ui.COMMAND_LIST:
-            ui.printTaskList(tasks.getTasks(), tasks.getTaskCount());
-            break;
-        case Ui.COMMAND_DONE:
-            tasks.markTaskAsDone(command.getDescription());
-            break;
-        case Ui.COMMAND_TODO:
-            tasks.addToDoToTasks(command.getDescription());
-            break;
-        case Ui.COMMAND_DEADLINE:
-            tasks.addDeadlineToTasks(command.getDescription());
-            break;
-        case Ui.COMMAND_EVENT:
-            tasks.addEventToTasks(command.getDescription());
-            break;
-        case Ui.COMMAND_DELETE:
-            tasks.deleteFromTasks(command.getDescription());
-            break;
-        default:
-            throw new DukeException();
-        }
 
-        storage.save(tasks.getTasks());
-        return true; // Still has not exited so return true
-    }
 
 }
