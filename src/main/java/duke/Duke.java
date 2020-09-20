@@ -25,7 +25,7 @@ public class Duke {
         }
     }
 
-    public void run() {
+    private void run() {
         start();
         runCommandLoopUntilByeCommand();
         exit();
