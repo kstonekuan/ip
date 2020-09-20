@@ -6,6 +6,10 @@ import duke.ui.Ui;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a list of tasks. A <code>TaskList</code> object corresponds to
+ * a list of tasks, a Ui object and an ErrorUi object.
+ */
 public class TaskList {
 
     private ArrayList<Task> tasks;
@@ -28,14 +32,30 @@ public class TaskList {
         return tasks;
     }
 
-    private int getLastTaskIndex() {
-        return tasks.size() - 1;
-    }
-
+    /**
+     * Returns the number of tasks in the list currently.
+     *
+     * @return Number of tasks.
+     */
     public int getTaskCount() {
         return tasks.size();
     }
 
+    /**
+     * Returns the last task added to the list.
+     * Usually used for printing an added task.
+     *
+     * @return Last task.
+     */
+    private Task getLastTask() {
+        return tasks.get(getTaskCount() - 1);
+    }
+
+    /**
+     * Deletes a task from the list based on the index.
+     *
+     * @param description Description from delete command.
+     */
     public void deleteFromTasks(String description) {
         try {
             if (description.equals("")) {
@@ -54,6 +74,11 @@ public class TaskList {
         }
     }
 
+    /**
+     * Adds an event task to the list.
+     *
+     * @param description Description from event command.
+     */
     public void addEventToTasks(String description) {
         try {
             if (description.equals("")) {
@@ -66,7 +91,7 @@ public class TaskList {
 
             tasks.add(new Event(eventDescription, eventAtMessage));
 
-            ui.printAddTask(tasks.get(getLastTaskIndex()), getTaskCount());
+            ui.printAddTask(getLastTask(), getTaskCount());
         } catch (DukeException e) {
             errorUi.printErrorMessage(ErrorUi.ERROR_DESCRIPTION_EVENT);
         } catch (IndexOutOfBoundsException e) {
@@ -74,6 +99,11 @@ public class TaskList {
         }
     }
 
+    /**
+     * Adds a deadline task to the list.
+     *
+     * @param description Description from deadline command.
+     */
     public void addDeadlineToTasks(String description) {
         try {
             if (description.equals("")) {
@@ -86,7 +116,7 @@ public class TaskList {
 
             tasks.add(new Deadline(deadlineDescription, doByMessage));
 
-            ui.printAddTask(tasks.get(getLastTaskIndex()), getTaskCount());
+            ui.printAddTask(getLastTask(), getTaskCount());
         } catch (DukeException e) {
             errorUi.printErrorMessage(ErrorUi.ERROR_DESCRIPTION_DEADLINE);
         } catch (IndexOutOfBoundsException e) {
@@ -94,6 +124,11 @@ public class TaskList {
         }
     }
 
+    /**
+     * Adds a todo task to the list.
+     *
+     * @param description Description from todo command.
+     */
     public void addToDoToTasks(String description) {
         try {
             if (description.equals("")) {
@@ -102,12 +137,17 @@ public class TaskList {
 
             tasks.add(new ToDo(description));
 
-            ui.printAddTask(tasks.get(getLastTaskIndex()), getTaskCount());
+            ui.printAddTask(getLastTask(), getTaskCount());
         } catch (DukeException e) {
             errorUi.printErrorMessage(ErrorUi.ERROR_DESCRIPTION_TODO);
         }
     }
 
+    /**
+     * Marks a task in the list as done based on the index.
+     *
+     * @param description Description from done command.
+     */
     public void markTaskAsDone(String description) {
         try {
             if (description.equals("")) {

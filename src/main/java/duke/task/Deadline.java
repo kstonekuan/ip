@@ -1,5 +1,9 @@
 package duke.task;
 
+/**
+ * Represents a deadline task. A <code>Deadline</code> object corresponds to
+ * a deadline with a description, done status and do by message.
+ */
 public class Deadline extends Task{
     public static final String DEADLINE_ICON = "[D]";
     private String doByMessage;
