@@ -5,6 +5,10 @@ import duke.ui.Ui;
 
 import java.io.IOException;
 
+/**
+ * Represents a command to be executed. A <code>Command</code> object corresponds to
+ * the command's type and description along with whether it is the bye command
+ */
 public class Command {
     private String type;
     private String description;
@@ -20,6 +24,14 @@ public class Command {
         isBye = false;
     }
 
+    /**
+     * Execute command based on type
+     *
+     * @param tasks List of tasks.
+     * @param storage Storage object to save tasks.
+     * @throws DukeException  If there is no such command type.
+     * @throws IOException If there is an error saving to storage.
+     */
     public void execute(TaskList tasks, Storage storage) throws DukeException, IOException {
         switch (type) {
         case Ui.COMMAND_BYE:
