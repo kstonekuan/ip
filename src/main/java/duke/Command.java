@@ -8,19 +8,26 @@ import java.io.IOException;
 public class Command {
     private String type;
     private String description;
+    private boolean isBye;
+
+    public Command() {
+        isBye = false;
+    }
 
     public Command(String type, String description) {
         this.type = type;
         this.description = description;
+        isBye = false;
     }
 
-    public boolean execute(TaskList tasks, Storage storage) throws DukeException, IOException {
+    public void execute(TaskList tasks, Storage storage) throws DukeException, IOException {
         switch (type) {
         case Ui.COMMAND_BYE:
-            return false; // Return false immediately to end the loop
+            isBye = true;
+            break;
         case Ui.COMMAND_LIST:
             Ui ui = new Ui();
-            ui.printTaskList(tasks.getTasks(), tasks.getTaskCount());
+            ui.printTaskList(tasks);
             break;
         case Ui.COMMAND_DONE:
             tasks.markTaskAsDone(description);
@@ -42,6 +49,9 @@ public class Command {
         }
 
         storage.save(tasks.getTasks());
-        return true; // Still has not exited so return true
+    }
+
+    public boolean isBye() {
+        return isBye;
     }
 }

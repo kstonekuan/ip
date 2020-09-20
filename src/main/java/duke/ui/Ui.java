@@ -90,14 +90,14 @@ public class Ui {
                 + MESSAGE_SPACING + task);
     }
 
-    public void printTaskList(ArrayList<Task> tasks, int taskCount) {
+    public void printTaskList(TaskList tasks) {
         try {
-            if (taskCount <= 0) {
+            if (tasks.getTaskCount() <= 0) {
                 throw new DukeException();
             }
             String taskList = MESSAGE_TASK_LIST;
-            for (int i = 0; i < taskCount; i++) {
-                taskList += System.lineSeparator() + (i + 1) + MESSAGE_TASK_LIST_SEPARATOR + tasks.get(i);
+            for (int i = 0; i < tasks.getTaskCount(); i++) {
+                taskList += System.lineSeparator() + (i + 1) + MESSAGE_TASK_LIST_SEPARATOR + tasks.getTasks().get(i);
             }
             printMessage(taskList);
         } catch (DukeException e) {

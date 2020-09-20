@@ -31,13 +31,12 @@ public class Duke {
         exit();
     }
 
-    private void runCommandLoopUntilByeCommand() {
-        boolean isNotBye = true;
+    public static void main(String[] args) {
+        new Duke("data/tasks.txt").run();
+    }
 
-        while (isNotBye) {
-            String inputMessage = ui.getUserInput();
-            isNotBye = processInputMessage(inputMessage);
-        }
+    private void start() {
+        ui.printGreetMessage();
     }
 
     private void exit() {
@@ -45,25 +44,27 @@ public class Duke {
         System.exit(0);
     }
 
-    private void start() {
-        ui.printGreetMessage();
-    }
+    private void runCommandLoopUntilByeCommand() {
+        boolean isBye = false;
 
-    public static void main(String[] args) {
-        new Duke("data/tasks.txt").run();
+        while (!isBye) {
+            String inputMessage = ui.getUserInput();
+            isBye = processInputMessage(inputMessage);
+        }
     }
 
     private boolean processInputMessage(String inputMessage) {
+        Command command = new Command();
         try {
-            Command command = Parser.parseCommand(inputMessage);
-            return command.execute(tasks, storage);
+            command = Parser.parseCommand(inputMessage);
+            command.execute(tasks, storage);
         } catch (IndexOutOfBoundsException | DukeException e) {
             errorUi.printErrorMessage(ErrorUi.ERROR_NOT_COMMAND);
         } catch (IOException e) {
             errorUi.printErrorMessage(ErrorUi.ERROR_DATA_LOAD);
         }
 
-        return true; // Still has not exited so return true
+        return command.isBye();
     }
 
 
