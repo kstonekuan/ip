@@ -2,8 +2,17 @@ package duke;
 
 import duke.ui.Ui;
 
+/**
+ * Represents a parser that parses inputs into commands.
+ */
 public class Parser {
 
+    /**
+     * Returns command object from parsing an input message.
+     *
+     * @param inputMessage Message inputted by user.
+     * @return Command to be executed.
+     */
     public static Command parseCommand(String inputMessage) {
         String[] inputWords = inputMessage.split(Ui.INPUT_DELIMITER);
 
