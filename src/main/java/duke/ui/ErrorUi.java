@@ -14,6 +14,8 @@ public class ErrorUi extends Ui {
     public static final String ERROR_DESCRIPTION_INDEX_NOT_NUMBER = "Please select the task by number.";
     public static final String ERROR_DESCRIPTION_DELETE = "The task to be deleted cannot be empty.";
     public static final String ERROR_DESCRIPTION_INDEX_OUT_OF_BOUNDS = "You selected a number not present in the list.";
+    public static final String ERROR_DESCRIPTION_FIND = "The description of task to find cannot be empty.";
+    public static final String ERROR_NO_TASKS_FOUND = "There were no such tasks found in your list.";
 
     public static final String ERROR_DATA_LOAD = "There was an issue loading your data file, starting new list.";
 

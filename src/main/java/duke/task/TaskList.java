@@ -4,9 +4,14 @@ import duke.DukeException;
 import duke.ui.ErrorUi;
 import duke.ui.Ui;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import static java.util.stream.Collectors.toList;
+
 public class TaskList {
+
+    private static final String NUMBERED_LIST_SEPARATOR = ".";
 
     private ArrayList<Task> tasks;
     private Ui ui;
@@ -123,6 +128,36 @@ public class TaskList {
             errorUi.printErrorMessage(ErrorUi.ERROR_DESCRIPTION_DONE);
         } catch (IndexOutOfBoundsException e) {
             errorUi.printErrorMessage(ErrorUi.ERROR_DESCRIPTION_INDEX_OUT_OF_BOUNDS);
+        }
+    }
+
+    private String getTasksAsNumberedList() {
+        String tasksAsNumberedList = "";
+        for (int i = 0; i < getTaskCount(); i++) {
+            tasksAsNumberedList += System.lineSeparator() + (i + 1) + NUMBERED_LIST_SEPARATOR + getTasks().get(i);
+        }
+        return tasksAsNumberedList;
+    }
+
+    public void listTasks() {
+        ui.printTaskList(getTasksAsNumberedList());
+    }
+
+    public void findTasks(String description) {
+        try {
+            if (description.equals("")) {
+                throw new DukeException();
+            }
+
+            ArrayList<Task> tasksFound = (ArrayList<Task>) getTasks().stream()
+                    .filter(task -> task.toString().contains(description))
+                    .collect(toList());
+
+            String tasksFoundAsNumberedList = new TaskList(tasksFound).getTasksAsNumberedList();
+
+            ui.printFoundTasks(tasksFoundAsNumberedList);
+        } catch (DukeException e) {
+            errorUi.printErrorMessage(ErrorUi.ERROR_DESCRIPTION_FIND);
         }
     }
 }

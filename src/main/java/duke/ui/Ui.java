@@ -25,8 +25,8 @@ public class Ui {
     private static final String MESSAGE_TASK_COUNT_SUFFIX = " tasks in the list.";
     private static final String MESSAGE_TASK_DONE = "Nice! I've marked this task as done:";
     private static final String MESSAGE_TASK_LIST = "Here are the tasks in your list:";
-    private static final String MESSAGE_TASK_LIST_SEPARATOR = ".";
     private static final String MESSAGE_TASK_DELETED = "Noted. I've removed this task:";
+    private static final String MESSAGE_TASK_FOUND = "Here are the matching tasks in your list:";
     private static final String MESSAGE_SPACING = "  ";
 
     public static final String COMMAND_BYE = "bye";
@@ -38,6 +38,7 @@ public class Ui {
     public static final String COMMAND_EVENT = "event";
     public static final String COMMAND_EVENT_AT_SEPARATOR = " /at ";
     public static final String COMMAND_DELETE = "delete";
+    public static final String COMMAND_FIND = "find";
 
     public static final int INPUT_RAW_INDEX_COMMAND = 0;
     public static final int INPUT_RAW_INDEX_DESC = 1;
@@ -90,19 +91,31 @@ public class Ui {
                 + MESSAGE_SPACING + task);
     }
 
-    public void printTaskList(TaskList tasks) {
+    public void printTaskList(String tasksAsNumberedList) {
         try {
-            if (tasks.getTaskCount() <= 0) {
+            if (tasksAsNumberedList.equals("")) {
                 throw new DukeException();
             }
-            String taskList = MESSAGE_TASK_LIST;
-            for (int i = 0; i < tasks.getTaskCount(); i++) {
-                taskList += System.lineSeparator() + (i + 1) + MESSAGE_TASK_LIST_SEPARATOR + tasks.getTasks().get(i);
-            }
-            printMessage(taskList);
+
+            printMessage(MESSAGE_TASK_LIST + tasksAsNumberedList);
         } catch (DukeException e) {
             ErrorUi errorUi = new ErrorUi();
             errorUi.printErrorMessage(ErrorUi.ERROR_NO_TASKS);
+        }
+    }
+
+
+
+    public void printFoundTasks(String tasksAsNumberedList) {
+        try {
+            if (tasksAsNumberedList.equals("")) {
+                throw new DukeException();
+            }
+
+            printMessage(MESSAGE_TASK_FOUND + tasksAsNumberedList);
+        } catch (DukeException e) {
+            ErrorUi errorUi = new ErrorUi();
+            errorUi.printErrorMessage(ErrorUi.ERROR_NO_TASKS_FOUND);
         }
     }
 }
