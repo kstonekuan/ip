@@ -70,7 +70,7 @@ public class Storage {
 
             task = getTaskFromString(description, taskType);
 
-            loadDone(statusIcon, task);
+            loadDoneStatus(statusIcon, task);
 
             tasks.add(task);
         }
@@ -91,15 +91,15 @@ public class Storage {
         }
     }
 
-    private static void loadDone(String statusIcon, Task task) {
+    private static void loadDoneStatus(String statusIcon, Task task) {
         if (statusIcon.equals(Task.TICK_ICON)) {
             task.markAsDone();
         }
     }
 
     private void createFileIfNotExists() throws IOException {
-        boolean fileExists = Files.exists(filePath);
-        if (!fileExists) {
+        boolean doesFileExist = Files.exists(filePath);
+        if (!doesFileExist) {
             Files.createDirectories(DIR_DATA_PATH);
             Files.createFile(filePath);
         }

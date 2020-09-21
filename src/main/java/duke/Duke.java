@@ -8,6 +8,8 @@ import java.io.IOException;
 
 public class Duke {
 
+    private static final String DATA_FILE_PATH = "data/tasks.txt";
+
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
@@ -32,7 +34,7 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        new Duke("data/tasks.txt").run();
+        new Duke(DATA_FILE_PATH).run();
     }
 
     private void start() {

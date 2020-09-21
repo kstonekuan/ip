@@ -5,12 +5,15 @@ import duke.ui.ErrorUi;
 import duke.ui.Ui;
 
 import java.util.ArrayList;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Represents a list of tasks. A <code>TaskList</code> object corresponds to
  * a list of tasks, a Ui object and an ErrorUi object.
  */
 public class TaskList {
+
+    private static final String NUMBERED_LIST_SEPARATOR = ".";
 
     private ArrayList<Task> tasks;
     private Ui ui;
@@ -77,16 +80,16 @@ public class TaskList {
     /**
      * Adds an event task to the list.
      *
-     * @param description Description from event command.
+     * @param eventInputs Array of inputs from event command.
      */
-    public void addEventToTasks(String description) {
+    public void addEventToTasks(String[] eventInputs) {
         try {
-            if (description.equals("")) {
+            String eventDescription = eventInputs[Ui.INPUT_EVENT_INDEX_DESC];
+
+            if (eventDescription.equals("")) {
                 throw new DukeException();
             }
 
-            String[] eventInputs = description.split(Ui.COMMAND_EVENT_AT_SEPARATOR);
-            String eventDescription = eventInputs[Ui.INPUT_EVENT_INDEX_DESC];
             String eventAtMessage = eventInputs[Ui.INPUT_EVENT_INDEX_AT];
 
             tasks.add(new Event(eventDescription, eventAtMessage));
@@ -102,16 +105,16 @@ public class TaskList {
     /**
      * Adds a deadline task to the list.
      *
-     * @param description Description from deadline command.
+     * @param deadlineInputs Array of inputs from deadline command.
      */
-    public void addDeadlineToTasks(String description) {
+    public void addDeadlineToTasks(String[] deadlineInputs) {
         try {
-            if (description.equals("")) {
+            String deadlineDescription = deadlineInputs[Ui.INPUT_DEADLINE_INDEX_DESC];
+
+            if (deadlineDescription.equals("")) {
                 throw new DukeException();
             }
 
-            String[] deadlineInputs = description.split(Ui.COMMAND_DEADLINE_BY_SEPARATOR);
-            String deadlineDescription = deadlineInputs[Ui.INPUT_DEADLINE_INDEX_DESC];
             String doByMessage = deadlineInputs[Ui.INPUT_DEADLINE_INDEX_BY];
 
             tasks.add(new Deadline(deadlineDescription, doByMessage));
@@ -163,6 +166,46 @@ public class TaskList {
             errorUi.printErrorMessage(ErrorUi.ERROR_DESCRIPTION_DONE);
         } catch (IndexOutOfBoundsException e) {
             errorUi.printErrorMessage(ErrorUi.ERROR_DESCRIPTION_INDEX_OUT_OF_BOUNDS);
+        }
+    }
+
+    private String getTasksAsNumberedList() {
+        String tasksAsNumberedList = "";
+        for (int i = 0; i < getTaskCount(); i++) {
+            tasksAsNumberedList += System.lineSeparator() + (i + 1) + NUMBERED_LIST_SEPARATOR + getTasks().get(i);
+        }
+        return tasksAsNumberedList;
+    }
+
+    /**
+     * Prints the tasks in the list with their corresponding numbers.
+     * Numbered list starts from index 1.
+     */
+    public void listTasks() {
+        ui.printTaskList(getTasksAsNumberedList());
+    }
+
+    /**
+     * Finds the tasks in the list based on a keyword.
+     * Prints the tasks found as a numbered list starting from index 1.
+     *
+     * @param description Description from find command.
+     */
+    public void findTasks(String description) {
+        try {
+            if (description.equals("")) {
+                throw new DukeException();
+            }
+
+            ArrayList<Task> tasksFound = (ArrayList<Task>) getTasks().stream()
+                    .filter(task -> task.toString().contains(description))
+                    .collect(toList());
+
+            String tasksFoundAsNumberedList = new TaskList(tasksFound).getTasksAsNumberedList();
+
+            ui.printFoundTasks(tasksFoundAsNumberedList);
+        } catch (DukeException e) {
+            errorUi.printErrorMessage(ErrorUi.ERROR_DESCRIPTION_FIND);
         }
     }
 }
