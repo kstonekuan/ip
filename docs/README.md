@@ -38,13 +38,13 @@ Adds a simple todo task to the list with a description.
 
 Example of usage: 
 
-```bash
+```
 todo borrow book
 ```
 
 Expected outcome:
 
-```bash
+```
 ____________________________________________________________
 Got it. I've added this task:
   [T][✘] borrow book
@@ -58,13 +58,13 @@ Adds a deadline task to the list with a task description and a by description.
 
 Example of usage: 
 
-```bash
+```
 deadline return book /by Sunday
 ```
 
 Expected outcome:
 
-```bash
+```
 ____________________________________________________________
 Got it. I've added this task:
   [D][✘] return book (by: Sunday)
@@ -78,13 +78,13 @@ Adds an event task to the list with a task description and an at description.
 
 Example of usage: 
 
-```bash
+```
 event project meeting /at Mon 2-4pm
 ```
 
 Expected outcome:
 
-```bash
+```
 ____________________________________________________________
 Got it. I've added this task:
   [E][✘] project meeting (at: Mon 2-4pm)
@@ -99,13 +99,13 @@ Each task's type, description and whether it is done is also shown.
 
 Example of usage: 
 
-```bash
+```
 list
 ```
 
 Expected outcome:
 
-```bash
+```
 ____________________________________________________________
 Here are the tasks in your list:
 1.[T][✘] borrow book
@@ -121,13 +121,13 @@ The task's status icon will change accordingly.
 
 Example of usage: 
 
-```bash
+```
 done 1
 ```
 
 Expected outcome:
 
-```bash
+```
 ____________________________________________________________
 Nice! I've marked this task as done:
   [T][✓] borrow book
@@ -140,13 +140,13 @@ Removes the task from the list based on the index shown in list feature.
 
 Example of usage: 
 
-```bash
+```
 delete 3
 ```
 
 Expected outcome:
 
-```bash
+```
 ____________________________________________________________
 Noted. I've removed this task:
   [E][✘] project meeting (at: Mon 2-4pm)
@@ -161,13 +161,13 @@ The tasks will be displayed in a numbered list similar to using `list`.
 
 Example of usage: 
 
-```bash
+```
 find book
 ```
 
 Expected outcome:
 
-```bash
+```
 ____________________________________________________________
 Here are the matching tasks in your list:
 1.[T][✓] borrow book
