@@ -1,8 +1,12 @@
 package duke.ui;
 
+/**
+ * Represents a user interface manager for printing errors.
+ */
 public class ErrorUi extends Ui {
 
     private static final String ERROR_PREFIX = "\u2639 OOPS!!! ";
+
     public static final String ERROR_NOT_COMMAND = "I'm sorry, but I don't know what that means :-(.";
     public static final String ERROR_DESCRIPTION_TODO = "The description of a todo cannot be empty.";
     public static final String ERROR_DESCRIPTION_DEADLINE = "The description of a deadline cannot be empty.";
@@ -16,13 +20,17 @@ public class ErrorUi extends Ui {
     public static final String ERROR_DESCRIPTION_INDEX_OUT_OF_BOUNDS = "You selected a number not present in the list.";
     public static final String ERROR_DESCRIPTION_FIND = "The description of task to find cannot be empty.";
     public static final String ERROR_NO_TASKS_FOUND = "There were no such tasks found in your list.";
-
     public static final String ERROR_DATA_LOAD = "There was an issue loading your data file, starting new list.";
 
     public ErrorUi() {
         super();
     }
 
+    /**
+     * Prints a message as an error message.
+     *
+     * @param errorMessage Message that is specific to the error encountered.
+     */
     public void printErrorMessage(String errorMessage) {
         printMessage(ERROR_PREFIX + errorMessage);
     }

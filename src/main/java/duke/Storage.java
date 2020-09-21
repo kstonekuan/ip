@@ -12,22 +12,33 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+/**
+ * Represents a storage in the local filesystem. A <code>Storage</code> object corresponds to
+ * a filePath where data is stored e.g., <code>data/tasks.txt</code>
+ */
 public class Storage {
     private static final String DIR_CURRENT_PATH = System.getProperty("user.dir");
     private static final Path DIR_DATA_PATH = Paths.get(DIR_CURRENT_PATH, "data");
-    private Path filePath;
     private static final String LOAD_DEADLINE_BY_SEPARATOR = " \\(by: ";
-    public static final String LOAD_EVENT_AT_SEPARATOR = " \\(at: ";
-    public static final int LOAD_TASK_DESCRIPTION_INDEX = 7;
-    public static final int LOAD_TASK_TYPE_INDEX_START = 0;
-    public static final int LOAD_TASK_TYPE_INDEX_END = 3;
-    public static final int LOAD_TASK_STATUS_INDEX_START = 3;
-    public static final int LOAD_TASK_STATUS_INDEX_END = 6;
+    private static final String LOAD_EVENT_AT_SEPARATOR = " \\(at: ";
+    private static final int LOAD_TASK_DESCRIPTION_INDEX = 7;
+    private static final int LOAD_TASK_TYPE_INDEX_START = 0;
+    private static final int LOAD_TASK_TYPE_INDEX_END = 3;
+    private static final int LOAD_TASK_STATUS_INDEX_START = 3;
+    private static final int LOAD_TASK_STATUS_INDEX_END = 6;
+
+    private Path filePath;
 
     public Storage(String filePath) {
         this.filePath = Paths.get(DIR_CURRENT_PATH, filePath.split("/"));
     }
 
+    /**
+     * Saves tasks to the text file specified in Storage constructor
+     *
+     * @param tasks List of tasks.
+     * @throws IOException  If there is a file write error.
+     */
     public void save(ArrayList<Task> tasks) throws IOException {
         ArrayList<String> tasksAsStringList = new ArrayList<>();
 
@@ -38,6 +49,13 @@ public class Storage {
         Files.write(filePath, tasksAsStringList);
     }
 
+    /**
+     * Loads tasks from the text file specified in Storage constructor
+     *
+     * @return List of tasks.
+     * @throws IOException  If there is a file read error.
+     * @throws DukeException If a line does not contain a valid task in the right format.
+     */
     public ArrayList<Task> load() throws IOException, DukeException {
         createFileIfNotExists();
 
@@ -52,7 +70,7 @@ public class Storage {
 
             task = getTaskFromString(description, taskType);
 
-            loadDone(statusIcon, task);
+            loadDoneStatus(statusIcon, task);
 
             tasks.add(task);
         }
@@ -73,15 +91,15 @@ public class Storage {
         }
     }
 
-    private static void loadDone(String statusIcon, Task task) {
+    private static void loadDoneStatus(String statusIcon, Task task) {
         if (statusIcon.equals(Task.TICK_ICON)) {
             task.markAsDone();
         }
     }
 
     private void createFileIfNotExists() throws IOException {
-        boolean fileExists = Files.exists(filePath);
-        if (!fileExists) {
+        boolean doesFileExist = Files.exists(filePath);
+        if (!doesFileExist) {
             Files.createDirectories(DIR_DATA_PATH);
             Files.createFile(filePath);
         }
