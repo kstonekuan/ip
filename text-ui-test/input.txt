@@ -20,6 +20,9 @@ delete 3
 delete 20
 delete
 list
+find
+find book
+find lecture
 blah
 
 bye

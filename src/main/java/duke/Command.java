@@ -26,8 +26,7 @@ public class Command {
             isBye = true;
             break;
         case Ui.COMMAND_LIST:
-            Ui ui = new Ui();
-            ui.printTaskList(tasks);
+            tasks.listTasks();
             break;
         case Ui.COMMAND_DONE:
             tasks.markTaskAsDone(description);
@@ -43,6 +42,9 @@ public class Command {
             break;
         case Ui.COMMAND_DELETE:
             tasks.deleteFromTasks(description);
+            break;
+        case Ui.COMMAND_FIND:
+            tasks.findTasks(description);
             break;
         default:
             throw new DukeException();
