@@ -1,5 +1,7 @@
 # User Guide
 
+Duke can help you keep track of your tasks through a simple command line interface.
+
 ## Features 
 
 ### Add tasks to the list
@@ -29,8 +31,37 @@ You can search for tasks based on their descriptions.
 ### Save and load the task list
 
 The list of tasks will be automatically loaded on start up and saved after every action that affects the list.
+The saved tasks can be found in `data/tasks.txt`.
 
 ## Usage
+
+### Start up
+
+Duke was built and tested with Java 11.
+You can run the JAR file using the following command:
+
+```bash
+chcp 65001
+java -Dfile.encoding=UTF-8 -jar ip.jar
+```
+
+If the status icons symbols show `?` instead of `✘` and `✓`,
+ you can change the font in your terminal to NSimSun.
+
+Expected outcome:
+
+```
+ ____        _
+|  _ \ _   _| | _____ 
+| | | | | | | |/ / _ \
+| |_| | |_| |   <  __/
+|____/ \__,_|_|\_\___|
+
+____________________________________________________________
+Hello! I'm Duke
+What can I do for you?
+____________________________________________________________
+```
 
 ### `todo` - Adds a todo task to the list
 
